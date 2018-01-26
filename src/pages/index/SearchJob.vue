@@ -1,29 +1,28 @@
 <template>
-  <div>
-    <span>职位搜索</span>
-    <div>
-      <span>招聘类型：</span>
-      <div v-for="(value, key) in recruitType" :key="key">
-        <input v-model="jobQuery.recruitType" type="radio" name="recruitTypes" :value="key" :id="'recruitType_'+key">
-        <label :for="'recruitType_'+key">{{value}}</label>
-      </div>
+  <el-card class="index-search-job">
+    <div slot="header">
+      <span>职位搜索</span>
     </div>
-    <div>
-      <span>工作地点：</span>
-      <input v-model="jobQuery.workCity" type="radio" name="workCity" value="" id="workCity_all" checked/>
-      <label for="workCity_all">全部</label>
-      <div v-for="(value, key) in workCity" :key="key">
-        <input v-model="jobQuery.workCity"  type="radio" name="workCity" :value="key" :id="'workCity_'+key">
-        <label :for="'workCity_'+key">{{value}}</label>
-      </div>
-    </div>
-    <button @click="search">搜索</button>
-  </div>
+    <el-form label-width="100px">
+      <el-form-item label="招聘类型">
+        <el-radio-group v-model="jobQuery.recruitType">
+          <el-radio-button v-for="(value, key) in recruitType" :key="key" :label="key">{{value}}</el-radio-button>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="工作地点">
+        <el-radio-group v-model="jobQuery.workCity">
+          <el-radio-button label="">全部</el-radio-button>
+          <el-radio-button v-for="(value, key) in workCity" :key="key" :label="key">{{value}}</el-radio-button>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="search" type='primary'>搜索</el-button>
+      </el-form-item>
+    </el-form>
+  </el-card>
 </template>
 
 <script>
-import C from '@/components/constants'
-
 export default {
   name: 'SearchJob',
   data() {
@@ -42,12 +41,12 @@ export default {
   methods: {
     initData() {
       this.$http
-        .get(C.host + '/translate/dicts', {
+        .get('/translate/dicts', {
           params: { types: 'recruitType,workCity' }
         })
         .then(response => {
-          if (response.body.success) {
-            let data = response.body.data
+          if (response.data.success) {
+            let data = response.data.data
             this.recruitType = data.recruitType
             this.workCity = data.workCity
           }
@@ -55,13 +54,12 @@ export default {
     },
     search() {
       this.$http
-        .post(C.host + '/job/list', null, {
+        .post('/job/list', null, {
           params: this.jobQuery
         })
         .then(response => {
-          if (response.body.success) {
-            let data = response.body.data
-            console.log(data)
+          if (response.data.success) {
+            let data = response.data.data
           }
         })
     }

@@ -1,29 +1,24 @@
 <template>
-<div class="header">
-		<div class="container"  >
-			<div class="header_top">
-				<div class="logo">
-					<a href="/index"><img src="images/logo.jpg"/></a>
-				</div>
-				<div class="menu">					
-					<ul class="nav" id="nav">
-						<li><a href="/index"/>">首页</a></li>
-						<li><a href="/job/list?recruitType=campus"/>">校园招聘</a></li>
-						<li><a href="/job/list?recruitType=society"/>">社会招聘</a></li>
-						<li><a href="/job/list?recruitType=trainee"/>">实习生招聘</a></li>
-						<li><a href="/about"/>">认识瑞丰</a></li>								
-					</ul>
-					<script type="text/javascript" src="js/responsive-nav.js"/></script>
-				</div>							
-				<div class="clearfix"> </div>
-			</div>
-		</div>
-	</div>
+	<el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
+		<el-menu-item index="1">首页</el-menu-item>
+		<el-menu-item index="2">校园招聘</el-menu-item>
+		<el-menu-item index="3">社会招聘</el-menu-item>
+		<el-menu-item index="4">实习生招聘</el-menu-item>
+		<el-menu-item index="5">认识瑞丰</el-menu-item>
+	</el-menu>
 </template>
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  data() {
+    return { activeIndex: '1' }
+  },
+  methods: {
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath)
+    }
+  }
 }
 </script>
 

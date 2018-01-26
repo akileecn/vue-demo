@@ -1,21 +1,17 @@
 <template>
-  <div>
-    <div>
-        <h3>热招职位</h3>
-        <button v-if="hasPrevious" @click="toPrevious">上一页</button>
-        <button v-if="hasNext" @click="toNext">下一页</button>
-        <ul>
-          <li v-for="item in hotList" :key="item.id">
-            <a :href="'/job/list?recruitType='+item.recruitType+'&id='+ item.id">{{item.name}}</a>
-          </li>
-        </ul>
+  <el-card class="index-hot-job">
+    <div slot="header">
+      <span>热招职位</span>
+      <el-button v-if="hasPrevious" @click="toPrevious" type="text">上一页</el-button>
+      <el-button v-if="hasNext" @click="toNext" type="text">下一页</el-button>
     </div>
-  </div>
+    <div>
+      <el-tag v-for="item in hotList" :key="item.id">{{item.name}}</el-tag>
+    </div>
+  </el-card>
 </template>
 
 <script>
-import C from '@/components/constants'
-
 export default {
   name: 'HotJob',
   data() {
@@ -39,12 +35,12 @@ export default {
   methods: {
     loadData() {
       this.$http
-        .get(C.host + '/job/hotList', {
+        .get('/job/hotList', {
           params: { pageNum: this.pageNum }
         })
         .then(response => {
-          if (response.body.success) {
-            let data = response.body.data
+          if (response.data.success) {
+            let data = response.data.data
             this.hotList = data.list
             this.pageNum = data.pageNum
             this.pages = data.pages
@@ -62,3 +58,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+.el-button {
+  float: right;
+  padding: 3px 0;
+}
+</style>
