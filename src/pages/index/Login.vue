@@ -1,7 +1,7 @@
 <template>
   <el-card class="index-login">
     <!-- 登录成功 -->
-    <div v-if="loginSuccess">
+    <div v-if="isLogin">
       <div>
         <span>欢迎回来！{{loginData.name}}</span>
         <el-button id='notice-count-btn' type='text'>您有{{loginData.noticeCount}}个新通知</el-button>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import api from '@/components/constants'
+import api from '@/components/api'
 import qs from 'querystring'
 
 export default {
@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       // 是否登录成功
-      loginSuccess: true,
+      isLogin: false,
       loginData: {
         name: '',
         noticeCount: 0
@@ -96,6 +96,14 @@ export default {
               if (response.data.success) {
                 let data = response.data.data
                 console.log(data)
+                this.isLogin = true
+                this.loginData.name = data.name
+                this.loginData.noticeCount = data.noticeCount
+              } else {
+                this.$message({
+                  message: response.data.message,
+                  type: 'warning'
+                })
               }
             })
         } else {
@@ -107,7 +115,7 @@ export default {
       this.$http.post('/user/logout').then(response => {
         console.log(response.data)
         if (response.data.success) {
-          this.loginSuccess = false
+          this.isLogin = false
         } else {
           this.$message({
             message: response.data.message,

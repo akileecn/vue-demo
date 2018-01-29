@@ -22,9 +22,6 @@ export default {
     vHotJob,
     vSearchJob,
     vLogin
-  },
-  created() {
-    console.log(typeof XMLHttpRequest)
   }
 }
 </script>

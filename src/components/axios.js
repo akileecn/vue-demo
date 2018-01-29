@@ -1,5 +1,5 @@
 import axios from 'axios'
-import api from '@/components/constants'
+import api from '@/components/api'
 
 function install (Vue) {
   axios.defaults.baseURL = api.host
