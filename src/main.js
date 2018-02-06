@@ -6,11 +6,13 @@ import router from './router'
 import axios from '@/components/axios'
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUi from 'element-ui'
+import custom from '@/components/custom'
 
 Vue.config.productionTip = false
 
 Vue.use(axios)
 Vue.use(ElementUi, { size: 'medium' })
+Vue.use(custom)
 
 /* eslint-disable no-new */
 new Vue({

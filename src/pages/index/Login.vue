@@ -7,7 +7,7 @@
         <el-button id='notice-count-btn' type='text'>您有{{loginData.noticeCount}}个新通知</el-button>
       </div>
       <div id="login-success-btns">
-        <el-button type='primary' icon='el-icon-circle-plus-outline'>我的简历</el-button>
+        <el-button type='primary' icon='el-icon-circle-plus-outline' @click="$router.push('/user/resume/list')">我的简历</el-button>
         <el-button type='success' icon='el-icon-bell'>我的通知</el-button>
         <el-button type='info' @click="logout">退出登录</el-button>
       </div>
@@ -53,9 +53,9 @@ export default {
       captchaImage: api.host + '/user/captchaImage.png',
       // 登录表单
       loginForm: {
-        username: null,
-        password: null,
-        captcha: null
+        username: '18658240213',
+        password: '234wer',
+        captcha: '1'
       },
       // 表单验证
       rules: {
@@ -88,14 +88,12 @@ export default {
     },
     login() {
       this.$refs.loginForm.validate(valid => {
-        console.log(valid)
         if (valid) {
           this.$http
             .post('/user/login', qs.stringify(this.loginForm))
             .then(response => {
               if (response.data.success) {
                 let data = response.data.data
-                console.log(data)
                 this.isLogin = true
                 this.loginData.name = data.name
                 this.loginData.noticeCount = data.noticeCount
