@@ -7,7 +7,7 @@ import jobNotice from '@/pages/job/Notice'
 
 import userCenter from '@/pages/user/Center'
 import resumeList from '@/pages/resume/List'
-import resumeDetail from '@/pages/resume/Detail'
+import resumeDetail from '@/pages/resume/detail/Main'
 
 Vue.use(Router)
 

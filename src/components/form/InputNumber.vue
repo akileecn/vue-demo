@@ -1,6 +1,7 @@
 <template>
   <el-form-item :prop="prop" :label="label">
-    <el-input-number :type="type" :value="value" @input="updateValue" :disabled="!editable"/>
+    <span v-if="!editable">{{value}}</span>
+    <el-input-number v-else :type="type" :value="value" @input="updateValue" :disabled="!editable"/>
   </el-form-item>
 </template>
 

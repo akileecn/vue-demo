@@ -1,6 +1,7 @@
 <template>
   <el-form-item :prop="prop" :label="label">
-    <el-date-picker :value="value" @input="updateValue" :type="type" placeholder="选择日期" :readonly="!editable"></el-date-picker>
+    <span v-if="!editable">{{value}}</span>
+    <el-date-picker v-else  :value="value" @input="updateValue" :type="type" value-format="yyyy-MM-dd" placeholder="选择日期" :readonly="!editable"></el-date-picker>
   </el-form-item>
 </template>
 

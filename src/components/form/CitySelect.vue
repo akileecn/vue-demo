@@ -1,30 +1,33 @@
 <template>
   <el-form-item :prop="prop" :label="label">
-    <!-- 只有省 -->
-    <el-select v-if="type == 'p'" :value="province" @input="updateProvince" clearable placeholder="请选择" :disabled="!editable">
-      <el-option v-for="(value, key) in provinces" :key="key" :label="key" :value="key"></el-option>
-    </el-select>
-    <!-- 省市地区联动 -->
-    <el-row v-else>
-      <el-col :span="5">
-        <el-select :value="province" @input="updateProvince" clearable placeholder="请选择" :disabled="!editable">
-          <el-option v-for="(value, key) in provinces" :key="key" :label="key" :value="key"></el-option>
-        </el-select>
-      </el-col>
-      <el-col :span="5">
-        <el-select :value="city" @input="updateCity" placeholder="请选择" :disabled="!editable">
-          <el-option v-for="(value, key) in cities" :key="key" :label="key" :value="key"></el-option>
-        </el-select>
-      </el-col>
-      <el-col :span="5">
-        <el-select :value="area" @input="updateArea" placeholder="请选择" :disabled="!editable">
-          <el-option v-for="item in areas" :key="item" :label="item" :value="item"></el-option>
-        </el-select>
-      </el-col>
-      <el-col :span="9">
-        <el-input :value="other" @input="updateOther" placeholder="____街道____号" :readonly="!editable"/>
-      </el-col>
-    </el-row>
+    <span v-if="!editable">{{value}}</span>
+    <template v-else>
+      <!-- 只有省 -->
+      <el-select v-if="type == 'p'" :value="province" @input="updateProvince" clearable placeholder="请选择">
+        <el-option v-for="(value, key) in provinces" :key="key" :label="key" :value="key"></el-option>
+      </el-select>
+      <!-- 省市地区联动 -->
+      <el-row v-else>
+        <el-col :span="5">
+          <el-select :value="province" @input="updateProvince" clearable placeholder="请选择">
+            <el-option v-for="(value, key) in provinces" :key="key" :label="key" :value="key"></el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="5">
+          <el-select :value="city" @input="updateCity" placeholder="请选择">
+            <el-option v-for="(value, key) in cities" :key="key" :label="key" :value="key"></el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="5">
+          <el-select :value="area" @input="updateArea" placeholder="请选择">
+            <el-option v-for="item in areas" :key="item" :label="item" :value="item"></el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="9">
+          <el-input :value="other" @input="updateOther" placeholder="____街道____号"/>
+        </el-col>
+      </el-row>
+    </template>
   </el-form-item>
 </template>
 
@@ -52,7 +55,6 @@ export default {
     }
   },
   props: ['type', 'value', 'prop', 'label', 'editable'],
-  created() {},
   watch: {
     value: function(val, oldVal) {
       if (val) {

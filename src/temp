@@ -1,0 +1,17 @@
+<@input label="学校名称" name="schoolName" required=true/>
+	<@input label="所学专业" name="major" required=true/>
+	</tr><tr>
+	<@select label="毕业方式" name="graduateType" required=true/>
+	<@select label="学位" name="degree" required=true/>
+	</tr><tr>
+	<@select label="学历" name="education" required=true/>
+	<@select label="学习形式" name="learnType" required=true/>
+	</tr><tr>
+	<@date label="开始时间" name="beginDate" required=true/>
+	<@date label="结束时间" name="endDate" required=true/>
+	</tr><tr>
+	<@select label="学校类别" name="schoolType" required=true/>
+	<#if recruitType!="society">
+	<@radio label="是否担任过学生干部" name="hasBeenCadre" required=true/>
+	</tr><tr>
+	<@select label="年级排名" name="gradeRank" required=true/>

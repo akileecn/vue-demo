@@ -1,5 +1,6 @@
 <template>
-  <el-upload
+  <img v-if="!editable" :src="imageUrl" :onerror="onerror" class="avatar">
+  <el-upload v-else
     class="avatar-uploader"
     :action="uploadUrl"
     :show-file-list="false"
@@ -47,7 +48,7 @@ export default {
       uploadImageUrl: null
     }
   },
-  props: ['resumeId'],
+  props: ['resumeId', 'editable'],
   computed: {
     imageUrl() {
       return this.uploadImageUrl
