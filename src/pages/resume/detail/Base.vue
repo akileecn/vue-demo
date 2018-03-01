@@ -143,7 +143,7 @@
 </template>
 
 <script>
-import vUploadAvatar from '@/pages/resume/detail/UploadAvatar'
+import vUploadAvatar from './UploadAvatar'
 import qs from 'querystring'
 import utils from '@/components/utils'
 

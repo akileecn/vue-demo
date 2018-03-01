@@ -1,17 +1,17 @@
 // 填充
 function fill (target, src) {
-  Reflect.ownKeys(target).forEach(key => {
+  for (let key in target) {
     if (target[key] == null) {
       target[key] = src[key]
     }
-  })
+  }
   return target
 }
 function clone (src) {
   let result = {}
-  Reflect.ownKeys(src).forEach(key => {
+  for (let key in src) {
     result[key] = src[key]
-  })
+  }
   return result
 }
 const utils = {

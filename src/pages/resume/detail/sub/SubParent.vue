@@ -1,12 +1,13 @@
 <template>
   <el-card>
     <div slot="header">
-      <span>教育经历(从最高学历填至本科或大专)</span>
+      <span>{{title}}</span>
     </div>
     <div v-for="(item, index) in formList" :key="index">
       <el-form :model="item" :rules="rules" ref="form" label-width="120px" class="form">
         <el-form-item>
           <el-button @click="deleteForm(index)" type="danger" icon="el-icon-delete" class="fr"/>
+          <el-button v-if="!item.editable" type='primary' icon="el-icon-edit-outline" @click="handleEditable(index)" class="fr"/>
         </el-form-item>
         <slot :item="item" ></slot>
         <el-form-item v-if="item.editable">
@@ -22,6 +23,7 @@
 <script>
 import qs from 'querystring'
 import utils from '@/components/utils'
+import clone from 'clone'
 
 export default {
   data() {
@@ -29,7 +31,7 @@ export default {
       formList: []
     }
   },
-  props: ['resumeId', 'subList', 'rules', 'formBean', 'apiType'],
+  props: ['resumeId', 'subList', 'subType', 'rules', 'formBean', 'title'],
   watch: {
     subList(value) {
       if (value) {
@@ -41,7 +43,7 @@ export default {
   },
   methods: {
     createForm(editable) {
-      let form = utils.clone(this.formBean)
+      let form = clone(this.formBean)
       form.id = null
       form.resumeId = this.resumeId
       form.editable = editable
@@ -60,7 +62,7 @@ export default {
         }
         let form = this.formList[index]
         this.$http
-          .post('/resume2/save/' + this.apiType, qs.stringify(form))
+          .post('/resume2/save/' + this.subType, qs.stringify(form))
           .then(response => {
             if (response.data.success) {
               form.editable = false
@@ -74,11 +76,12 @@ export default {
           })
       })
     },
+    handleEditable(index) {
+      let form = this.formList[index]
+      form.editable = true
+    },
     deleteForm(index) {
       let form = this.formList[index]
-      console.log(form.editable)
-      form.editable = !form.editable
-      return
       if (form.id) {
         this.$confirm('是否确认删除?', '提示', {
           confirmButtonText: '确定',
@@ -87,7 +90,7 @@ export default {
         }).then(() => {
           this.$http
             .post(
-              '/resume2/delete/' + this.apiType,
+              '/resume2/delete/' + this.subType,
               qs.stringify({ id: form.id, resumeId: form.resumeId })
             )
             .then(response => {
@@ -111,7 +114,7 @@ export default {
 
 <style scoped>
 .form {
-  border-bottom: 1px dashed #606266;
+  border-bottom: 1px dashed #ebeef5;
   margin-bottom: 20px;
 }
 .add-button {
